@@ -134,7 +134,7 @@ function gameLoop()
 
 	for(let i=0;i<STAR_MAX;i++)star[i].draw(); 
 	
-	drawSprite(0,0<<8, 0<<8);
+	drawSprite(0,75<<8, 250<<8);
 	
 	//仮想画面から実際のキャンバスにコピー
 	con.drawImage( vcan , camera_x,camera_y,SCREEN_W,SCREEN_H,
