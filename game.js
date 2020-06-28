@@ -34,7 +34,10 @@ class Sprite
 
 //スプライト
 let sprite=[
-	new Sprite(0,1,47,44),
+	new Sprite(0,0,47,44),//0 戦闘機
+	
+	new Sprite(0,45,3,7),//1 弾1
+	new Sprite(4,45,5,5),//2 弾2
 ];
 
 //スプライトを描画する
@@ -89,6 +92,32 @@ document.onkeyup = function(e)
 	key[ e.keyCode ] = false;
 }
 
+//弾クラス
+class Tama
+{
+	constructor( x,y, vx,vy )
+	{
+		this.sn = 2;
+		this.x  = x;
+		this.y  = y;
+		this.vx = vx;
+		this.vy = vy;
+	}
+	
+	update()
+	{
+		this.x += this.vx
+		this.y += this.vy
+	}
+	
+	draw()
+	{
+		drawSprite( this.sn, this.x, this.y);
+	}
+}
+let tama=[];
+
+
 //戦闘機クラス
 class Jiki
 {
@@ -102,10 +131,12 @@ class Jiki
 	//戦闘機の移動
 	update()
 	{
-		if( key[37] && this.x>this.speed )this.x-=this.speed;
-		if( key[38] && this.y>this.speed )this.y-=this.speed;
-		if( key[39] && this.x<= (FIELD_W<<8)-this.speed )this.x+=this.speed;
-		if( key[40] && this.y<= (FIELD_H<<8)-this.speed )this.y+=this.speed;
+		if( key[16])tama.push( new Tama(this.x,this.y, 0,-2000 ) );
+		
+		if( key[65] && this.x>this.speed )this.x-=this.speed;
+		if( key[87] && this.y>this.speed )this.y-=this.speed;
+		if( key[68] && this.x<= (FIELD_W<<8)-this.speed )this.x+=this.speed;
+		if( key[83] && this.y<= (FIELD_H<<8)-this.speed )this.y+=this.speed;
 	}
 	//描画
 	draw()
@@ -168,6 +199,7 @@ function gameLoop()
 {
 	//移動の処理
 	for(let i=0;i<STAR_MAX;i++)star[i].update();
+	for(let i=0;i<tama.length;i++)tama[i].update(); 
 	
 	jiki.update();
 	
@@ -176,6 +208,7 @@ function gameLoop()
 	vcon.fillRect(camera_x,camera_y,SCREEN_W,SCREEN_H);
 
 	for(let i=0;i<STAR_MAX;i++)star[i].draw(); 
+	for(let i=0;i<tama.length;i++)tama[i].draw(); 
 	
 	jiki.draw();
 	
