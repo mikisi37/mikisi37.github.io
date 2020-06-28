@@ -1,4 +1,11 @@
-//ゲームスピード
+//デバックフラグ
+const DEBUG = true;
+
+let drawCount=0;
+let fps=0;
+let lastTime=Date.now();
+
+//ゲームスピード(ms)
 const GAME_SPEED = 1000/60;
 
 //画面サイズ
@@ -18,7 +25,7 @@ const STAR_MAX =300;
 
 //ファイルを読み込み
 let spriteImage = new Image();
-spriteImage.src = "img/sprite.png";
+spriteImage.src = "sprite.png";
 
 //スプライトクラス
 class Sprite
@@ -34,10 +41,15 @@ class Sprite
 
 //スプライト
 let sprite=[
-	new Sprite(0,0,47,44),//0 戦闘機
+	new Sprite(0,0,43,40),//0 戦闘機
 	
-	new Sprite(0,45,3,7),//1 弾1
-	new Sprite(4,45,5,5),//2 弾2
+	new Sprite(0,40,3,6),//1 弾1
+	new Sprite(4,40,5,5),//2 弾2
+	
+	new Sprite(220,86,23,17),//3 敵1
+	new Sprite(255,87,20,14),//4 敵2
+	new Sprite(280,87,20,14),//5 敵3
+	new Sprite(318,82,30,16),//6 敵4
 ];
 
 //スプライトを描画する
@@ -92,22 +104,57 @@ document.onkeyup = function(e)
 	key[ e.keyCode ] = false;
 }
 
-//弾クラス
-class Tama
+//敵クラス
+class Teki
 {
 	constructor( x,y, vx,vy )
 	{
-		this.sn = 2;
-		this.x  = x;
-		this.y  = y;
-		this.vx = vx;
-		this.vy = vy;
+		this.sn   = 6;
+		this.x    = x;
+		this.y    = y;
+		this.vx   = vx;
+		this.vy   = vy;
+		this.kill = false;
 	}
 	
 	update()
 	{
 		this.x += this.vx
 		this.y += this.vy
+		
+		if( this.x<0 || this.x>FIELD_W<<8
+			|| this.y<0 || this.y>FIELD_H<<8 )this.kill = true;
+	}
+	
+	draw()
+	{
+		drawSprite( this.sn, this.x, this.y);
+	}
+}
+let teki=[
+new Teki( 200<<8,200<<8, 0, 0)
+];
+
+//弾クラス
+class Tama
+{
+	constructor( x,y, vx,vy )
+	{
+		this.sn   = 2;
+		this.x    = x;
+		this.y    = y;
+		this.vx   = vx;
+		this.vy   = vy;
+		this.kill = false;
+	}
+	
+	update()
+	{
+		this.x += this.vx
+		this.y += this.vy
+		
+		if( this.x<0 || this.x>FIELD_W<<8
+			|| this.y<0 || this.y>FIELD_H<<8 )this.kill = true;
 	}
 	
 	draw()
@@ -125,13 +172,30 @@ class Jiki
 	{
 		this.x = (FIELD_W/2)<<8;
 		this.y = (FIELD_H/2)<<8;
-		this.speed = 512;
+		this.speed  = 512;
+		this.reload = 0;
+		this.relo2  = 0;
 	}
 	
 	//戦闘機の移動
 	update()
 	{
-		if( key[16])tama.push( new Tama(this.x,this.y, 0,-2000 ) );
+		if( key[16] && this.reload==0 )
+		{
+			tama.push( new Tama(this.x,this.y-(4<<8), 0,-2000 ) );
+			//tama.push( new Tama(this.x+(4<<8),this.y-(4<<8), 80,-2000 ) );
+			//tama.push( new Tama(this.x-(4<<8),this.y-(4<<8), 80,-2000 ) );
+			
+			this.reload=6;
+			if(++this.relo2 ==4)
+			{
+				this.reload=20;
+				this.relo2=0;
+			}
+		}
+		if( !key[16] )this.reload= this.relo2=0;
+		
+		if(this.reload>0 ) this.reload--;
 		
 		if( key[65] && this.x>this.speed )this.x-=this.speed;
 		if( key[87] && this.y>this.speed )this.y-=this.speed;
@@ -199,7 +263,17 @@ function gameLoop()
 {
 	//移動の処理
 	for(let i=0;i<STAR_MAX;i++)star[i].update();
-	for(let i=0;i<tama.length;i++)tama[i].update(); 
+	for(let i=tama.length-1;i>=0;i--)
+	{
+		tama[i].update(); 
+		if(tama[i].kill)tama.splice( i,1 );
+	}
+	
+	for(let i=teki.length-1;i>=0;i--)
+	{
+		teki[i].update(); 
+		if(teki[i].kill)teki.splice( i,1 );
+	}
 	
 	jiki.update();
 	
@@ -209,6 +283,7 @@ function gameLoop()
 
 	for(let i=0;i<STAR_MAX;i++)star[i].draw(); 
 	for(let i=0;i<tama.length;i++)tama[i].draw(); 
+	for(let i=0;i<teki.length;i++)teki[i].draw(); 
 	
 	jiki.draw();
 	
@@ -220,6 +295,23 @@ function gameLoop()
 	//仮想画面から実際のキャンバスにコピー
 	con.drawImage( vcan , camera_x,camera_y,SCREEN_W,SCREEN_H,
 		0,0,CANVAS_W,CANVAS_H);
+	
+	if(DEBUG)
+	{
+		drawCount++;
+		if( lastTime +1000 <=Date.now() )
+		{
+			fps=drawCount;
+			drawCount=0;
+			lastTime=Date.now();
+		}
+		
+		con.font="20px' Impact'";
+		con.fillStyle = "green";
+		con.fillText("FPS:"+fps,10,20);
+		con.fillText("Tama:"+tama.length,10,40);
+		con.fillText("Teki:"+teki.length,100,20);
+	}
 }
 
 //オンロードでゲーム開始
