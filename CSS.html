@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head><meta charset="utf-8">
+  <title>cssファイル&html使い方<title>
+</head>
+
+<body>
+<pre><font size="35">
+CSS
+</font>
+@charset "utf-8";
+/*============================================
+全般的なスタイル
+============================================*/
+* {
+ /*margin:0*/; padding:0;					/*全要素の外側・内側余白をリセット*/
+}
+
+body {
+ background-color:#D3D3D3;				/*ページ全体の背景色*/
+ background-image:url("img/");				/*全体の背景画像*/
+ font-size:95%;						/* フォントサイズを95%にする */
+ font-family: "ＭＳ ゴシック",sans-serif;		/* フォントの種類をゴシック系にする */
+ line-height:1.5;					/* 行の高さを1.5倍にする */
+ color:#333333;						/* 文字色を濃い目のグレーにする */
+}
+
+div#pagebody {
+ width:1000px; margin:0 auto;				/*内部全体を動かす*/
+ background-color:#ffffff;				/*内容全体の背景色*/
+ background-image:url("img/");				/*コンテンツ全体の背景*/	
+ background-repeat:repeat-y;				/*背景画像を縦に繰り返す*/
+}
+img {border:0;}						/*画像のボーダーを0にする*/
+
+/*============================================
+ヘッダ
+============================================*/
+div#header {
+	height:80px;					/*ヘッダ部分の高さ*/
+}
+div#header h1 {
+	padding:5px 0px 5px 10px;			/*見出しの位置調整*/
+	font-size:18px;					/*フォントのサイズ*/
+	font-family:Arial, Helvetica, sans-serif;	/*フォントの種類*/
+}
+div#header h1 a {text-decoration:none;}			/*リンクしたの線を消す*/ 
+img {border:0;}						/*画像のボーダーを0にする*/
+
+/*============================================
+メインメニュー
+============================================*/
+ul#menu {
+ width:960px; height:30px;				/*メインメニュー部分の幅と高さ*/
+ margin:0px 200px;					/*上下外側余白・左右外側余白*/
+}
+
+#menu li {
+ list-style-type:none;					/*リストマーカー無しにする*/
+ display:inline;					/*リスト項目をインライン表示にする*/
+ float:left;						/*リスト項目を横に並べる*/
+}
+
+#menu li a {
+ background-color:rgb(169,169,169,0.5);			/*背景色*/
+ color:#ffffff;						/*文字色*/
+ display:block;						/*リンク部分をブロック表示にする*/
+ width:200px; height:50px;				/*幅と高さ*/
+ padding:0px 0px 0px 0px;				/*隙間(上,下,左,右)*/
+ text-align:center;					/*テキストをセンター揃えにする*/
+ text-decoration:none;					/*リンク部分を下線無しにする*/
+}
+
+#menu li a:hover {
+ background-color:rgb(128,128,128,0.5);			/*リンクにマウスが乗ったら背景色を変更する*/
+ background-image:url(img/);				/*リンクにマウスが乗ったら背景画像変更*/
+
+
+
+
+
+
+/*============================================
+ヘッダ画像
+============================================*/
+#img_index {
+	width:960px; height:360px;	/*トップページのヘッダ画像の表示サイズを指定*/
+	margin:5px 20px;	/*マージン*/
+}
+#img_subpage {
+	width:960px; height:240px;	/*トップページ以外のヘッダ画像の表示サイズを指定*/
+	margin:5px 20px;	/*マージン*/
+}
+
+/*============================================
+サブメニュー（左カラム）
+============================================*/
+h2 {
+	width:160px; height:43px;		/*幅と高さ*/
+	padding:17px 0px 0px 100px;		/*パディング*/
+	font-size:16px;				/*フォントサイズ*/
+	background-image:url(images/bg_h2.png);		/*背景画像*/
+	background-repeat:no-repeat;		/*背景画像を繰り返さない*/
+	background-color:#000033;		/*背景色*/
+	color:#ffffff;		/*文字色*/
+}
+div#submenu {
+	width:260px;			/*幅の指定*/
+	margin:10px 10px 10px 25px;	/*位置調整*/
+	float:left;					/*カラムを左寄せにする*/
+}
+div#submenu ul li {
+	list-style-type:none;		/*リストマーカー無しにする*/
+}
+div#submenu ul li a {
+	display:block;			/*リンク部分をブロック表示にする*/
+	height:45px;			/*高さを45pxにする*/
+	padding:15px 0px 0px 30px;	/*パディング*/
+	text-decoration:none;		/*リンクの下線を無くす*/
+	border-bottom:1px dotted gray;		/*リンク領域の下部にボーダーを付ける*/
+	background-image:url(images/bg_submenu.png);	/*リンク領域に背景画像を付ける*/
+	background-repeat:no-repeat;	/*背景画像を繰り返さない*/
+	color:#333333;		/*文字色*/
+}
+div#submenu ul li:first-child a {
+	border-top:1px dotted gray;		/*一番上のリンクに上線を表示*/
+}
+div#submenu ul li a:hover	{
+	text-decoration:underline;	/*リンクにマウスが乗ったら下線を表示*/
+}
+div#submenu ul li a:before {
+	content: url("images/icon_submenu.png");	/*アイコン画像を挿入*/
+	margin:0px 10px 0px 0px;	/*マージン*/
+	vertical-align:text-top;	/*縦方向の表示位置*/
+}
+
+/*============================================
+インフォメーション（右カラム）
+============================================*/
+div#info {
+	width:660px;				/*幅の指定*/
+	float:left;					/*カラムを左寄せにする*/
+	padding:10px 20px 0px 0px;	/*パディング*/
+}
+h3 {
+	font-size:14px;		/*文字サイズ*/
+	width:660px;		/*横幅*/
+	padding:10px 0px 10px 20px;	/*パディング*/
+	background-color:#003399;		/*背景色*/
+	color:#ffffff;		/*文字色*/
+	border-radius:3px;		/*角丸にする*/
+	-moz-border-radius:3px; -webkit-border-radius:3px; -o-border-radius:3px; -ms-border-radius:3px;		/*角丸にする（ベンダープレフィックス付きの指定）*/
+}
+p {
+	width:660px;		/*幅の指定*/
+	margin:10px;		/*マージン*/
+	text-indent:1em;	/*インデント幅*/
+}
+.infoimg_index {
+	width:200px; height:150px;	/*画像の表示サイズを指定*/
+	margin:0px 0px 20px 20px;	/*マージン*/
+	float:right;				/*画像を右寄せにする*/
+}
+.infoimg_subpage {
+	width:400px; height:300px;	/*画像の表示サイズを指定*/
+	margin:0px 20px 20px 0px;	/*マージン*/
+	float:left;				/*画像を左寄せにする*/
+}
+.infoimg_tel {
+	display:block;		/*ブロック表示にする*/
+	width:400px; height:80px;	/*画像の表示サイズを指定*/
+}
+hr {
+	clear:both;			/*フロート配置をクリアする*/
+	width:680px;		/*幅の指定*/
+	margin:10px 0px;		/*マージン*/
+	border:1px dotted #cccccc;	/*内容の区切りをグレーの点線表示にする*/
+}
+
+/*============================================
+備考情報
+============================================*/
+div.remarks {
+	margin:0px 10px 10px 10px;
+}
+h4 {
+	color:#000066;
+}
+
+/*============================================
+フッタ
+============================================*/
+div#footer {
+	clear:both;					/*フロート配置をクリアする*/
+	height:40px;				/*高さの指定*/
+	padding:10px 0px 0px 0px;	/*パディング*/
+	font-size:x-small;			/*フォントサイズを小さくする*/
+	text-align:center;			/*センタリング*/
+}
+<font size="35">
+HTML使い方
+</font>
+<!DOCTYPE html>
+1<html> -1</html>　：　「HTMLですよ」という宣言。
+2<head> 3-2</head> ：　ホームページの情報を間に埋め込む。
+<head><meta charset="utf-8"></head>  :言語形式をutf-8にする。
+3<title> </title>　：　ページのタイトル。ブラウザの上に表示される。
+4<body> -2</body> ：　この間にホームページ内容を書く。
+4<body background="img/(壁紙にしたい画像名＋拡張子)"> :  ページの壁紙。
+5<div align="center">　-3</div>：:  囲んだ中身をセンターに揃える。<div>自体は意味のあるタグではなく、中央寄せやCSSの効果を範囲指定するのに利用する。
+6<img src="img/(ホームページに貼り付けたい画像名＋拡張子)"width"(表示させたい画像の幅数)" height"(表示させたい画像の高さ数)" alt="(画像名)":  画像を張り付ける。
+7<a href ="(開きたいホームページファイル)またわ(URL)"> (表示させる名前)</a>:  hrefで指定したページにリンクします。
+     ・・・・・・・・・・・・・・・・・・・・・
+ <hr width="(数値)">:  水平線を表示します。width="数字"で長さを指定。
+<p> </p>: 段落。文章ですと、意味付ける。
+<br>　：　改行する。
+<pre> </pre>  :テキストの改行やスペースをそのままにする。
+<font size="(数値)"> </font>  :  数値内の大きさに変える。
+<font color="(名前)"> </font>  :　名前の色に変える。
+
+</body>
+</html>
+
