@@ -71,8 +71,8 @@ function drawSprite( snum, x, y)
 	let px = (x>>8) - sw/2;
 	let py = (y>>8) - sh/2;
 	
-	if( px+sw/2 <camera_x || px-sw/2 >=camera_x+SCREEN_W
-		||py+sh/2 <camera_y || py-sh/2 >=camera_y+SCREEN_H )return;
+	if( px+sw <camera_x || px >=camera_x+SCREEN_W
+		||py+sh <camera_y || py >=camera_y+SCREEN_H )return;
 	
 	vcon.drawImage( spriteImage, sx,sy,sw,sh,
 			px,py, sw,sh);
@@ -112,12 +112,12 @@ document.onkeyup = function(e)
 	key[ e.keyCode ] = false;
 }
 
-//敵クラス
-class Teki
+//クラスキャラクターベース
+class CharaBase
 {
-	constructor( x,y, vx,vy )
+	constructor(snum, x,y, vx,vy )
 	{
-		this.sn   = 6;
+		this.sn   = snum;
 		this.x    = x;
 		this.y    = y;
 		this.vx   = vx;
@@ -137,39 +137,56 @@ class Teki
 	draw()
 	{
 		drawSprite( this.sn, this.x, this.y);
+	}
+}
+
+//敵クラス
+class Teki extends CharaBase
+{
+	constructor ( snum,x,y,vx,vy )
+	{
+		super( snum,x,y,vx,vy );
+		//
+		//
+	}
+	
+	update()
+	{
+		super.update();
+		//
+		//
+	}
+	
+	draw()
+	{
+		super.draw();
+		//
+		//
 	}
 }
 let teki=[
-new Teki( 200<<8,200<<8, 0, 0)
+new Teki( 6, 200<<8,200<<8, 0, 0)
 ];
 
 //弾クラス
-class Tama
+class Tama extends CharaBase
 {
-	constructor( x,y, vx,vy )
+	constructor ( x,y,vx,vy )
 	{
-		this.sn   = 2;
-		this.x    = x;
-		this.y    = y;
-		this.vx   = vx;
-		this.vy   = vy;
-		this.kill = false;
+		super( 2,x,y,vx,vy );
 	}
 	
 	update()
 	{
-		this.x += this.vx
-		this.y += this.vy
-		
-		if( this.x<0 || this.x>FIELD_W<<8
-			|| this.y<0 || this.y>FIELD_H<<8 )this.kill = true;
+		super.update();
 	}
 	
 	draw()
 	{
-		drawSprite( this.sn, this.x, this.y);
+		super.draw();
 	}
 }
+
 let tama=[];
 
 
@@ -266,22 +283,24 @@ function gameInit()
 	setInterval( gameLoop , GAME_SPEED );
 }
 
+//オブジェクトアップデートベース
+function updateObj( obj )
+{
+	for(let i=obj.length-1;i>=0;i--)
+	{
+		obj[i].update(); 
+		if(obj[i].kill)obj.splice( i,1 );
+	}
+}
+
 //ゲームループ
 function gameLoop()
 {
 	//移動の処理
 	for(let i=0;i<STAR_MAX;i++)star[i].update();
-	for(let i=tama.length-1;i>=0;i--)
-	{
-		tama[i].update(); 
-		if(tama[i].kill)tama.splice( i,1 );
-	}
-	
-	for(let i=teki.length-1;i>=0;i--)
-	{
-		teki[i].update(); 
-		if(teki[i].kill)teki.splice( i,1 );
-	}
+
+	updateObj(tama);
+	updateObj(teki);
 	
 	jiki.update();
 	
