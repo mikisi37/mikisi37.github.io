@@ -28,7 +28,7 @@ const STAR_MAX =300;
 
 //ファイルを読み込み
 let spriteImage = new Image();
-spriteImage.src = "sprite.png";
+spriteImage.src = "シューティングゲーム/sprite.png";
 
 //キャンバス
 let can = document.getElementById("can");
