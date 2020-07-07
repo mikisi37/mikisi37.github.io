@@ -77,7 +77,7 @@ class Expl extends CharaBase
 
 	draw()
 	{
-		this.sn = 8 + (this.count>>2);
+		this.sn = 7 + (this.count>>2);
 		if(this.sn==10)
 		{
 			this.kill=true;
@@ -94,7 +94,7 @@ function explosion(x,y,vx,vy)
 	{
 		let evx = (vx+rand(-10,10)<<4);
 		let evy = (vy+rand(-10,10)<<4);
-	expl.push( new Expl(8,x,y,evx,evy));
+	expl.push( new Expl(7,x,y,evx,evy));
 	}
 }
 
@@ -102,6 +102,14 @@ function explosion(x,y,vx,vy)
 document.onkeydown = function(e)
 {
 	key[ e.keyCode ] = true;
+
+	if(e.keyCode == 13)
+	{
+		delete jiki;
+		jiki = new Jiki();
+		gameOver=false;
+		score =0;
+	}
 }
 
 //キーボードが離されたとき

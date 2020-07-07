@@ -41,6 +41,8 @@ con.webkitimageSmoothingEnabled =SMOOTHING;
 con.msimageSmoothingEnabled     =SMOOTHING;
 con.imageSmoothingEnabled       =SMOOTHING;
 
+con.font="20px' Impact'";
+
 //フィールド(仮想画面)
 let vcan = document.createElement("canvas");
 let vcon = vcan.getContext("2d");
@@ -50,6 +52,12 @@ vcan.height = FIELD_H;
 //カメラ座標
 let camera_x = 0;
 let camera_y = 0;
+
+//ゲームオーバーフラグ
+let gameOver =false;
+
+//スコア
+let score = 0;
 
 //星の実体
 let star=[];
@@ -85,8 +93,11 @@ function updateObj( obj )
 function gameLoop()
 {
 	//テスト
-	if( rand(0,30)==1)
-		teki.push( new Teki( 7,rand(0,FIELD_W<<8),0, 0,rand(300,1200) ) );
+	if( rand(0,50)==1)
+	{
+		let r = rand(0,1);
+		teki.push( new Teki( r,rand(0,FIELD_W<<8),0, 0,rand(300,1200) ) );
+	}
 
 	//移動の処理
 	for(let i=0;i<STAR_MAX;i++)star[i].update();
@@ -96,7 +107,7 @@ function gameLoop()
 	updateObj(teki);
 	updateObj(expl);
 
-	jiki.update();
+	if(!gameOver) jiki.update();
 
 	//描画の処理
 	vcon.fillStyle=(jiki.damage)?"#660000":"black";
@@ -108,7 +119,7 @@ function gameLoop()
 	for(let i=0;i<teki.length;i++)teki[i].draw();
 	for(let i=0;i<expl.length;i++)expl[i].draw();
 
-	jiki.draw();
+	if(!gameOver) jiki.draw();
 
 	//戦闘機の移動範囲 0 ～ FIELD_W
 	//カメラ範囲 0 ～ (FIELD_W-SCREEN_W)
@@ -118,6 +129,23 @@ function gameLoop()
 	//仮想画面から実際のキャンバスにコピー
 	con.drawImage( vcan , camera_x,camera_y,SCREEN_W,SCREEN_H,
 		0,0,CANVAS_W,CANVAS_H);
+
+//情報の表示
+	con.fillStyle = "green";
+
+	if(gameOver)
+	{
+		let s= "GAME OVER";
+		let w= con.measureText(s).width;
+		let x= CANVAS_W/2 - w/2;
+		let y= CANVAS_H/2 - 30;
+		con.fillText(s,x,y);
+		s= "Push 'Enter' key to restart";
+		w= con.measureText(s).width;
+		x= CANVAS_W/2 - w/2;
+		y= CANVAS_H/2 + 10 ;
+		con.fillText(s,x,y);
+	}
 
 	if(DEBUG)
 	{
@@ -129,12 +157,15 @@ function gameLoop()
 			lastTime=Date.now();
 		}
 
-		con.font="20px' Impact'";
-		con.fillStyle = "green";
 		con.fillText("FPS:"+fps,10,20);
-		con.fillText("Bullet:"+tama.length,10,40);
-		con.fillText("Enemy:"+teki.length,100,20);
-		con.fillText("Enemy Bullet:"+teta.length,100,40);
+		con.fillText("X:"+(jiki.x>>8),100,20);
+		con.fillText("Y:"+(jiki.y>>8),193,20);
+		con.fillText("Score:"+score,500,20);
+
+		con.fillText("HP:"+jiki.hp,10,40);
+		con.fillText("Bullet:"+tama.length,100,40);
+		con.fillText("Enemy:"+teki.length,193,40);
+		con.fillText("Enemy Bullet:"+teta.length,295,40);
 	}
 }
 

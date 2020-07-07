@@ -25,11 +25,20 @@ class Tama extends CharaBase
 					this.x, this.y, /*this.w,this.h,*/ this.r,
 					teki[i].x, teki[i].y,/*teki[i].w,teki[i].y,*/ teki[i].r ) )
 				{
-					teki[i].kill=true;
 					this.kill=true;
+
+					if((teki[i].hp-= 40)<=0)
+					{
+					teki[i].kill=true;
 
 					explosion(
 						         teki[i].x, teki[i].y,teki[i].vx>>3,teki[i].vy>>3 );
+										 score += teki[i].score;
+					}
+					else
+					{
+						expl.push( new Expl(7,teki[i].x,teki[i].y,0,0));
+					}
 
 					break;
 				}
@@ -48,19 +57,27 @@ class Jiki
 {
 	constructor()
 	{
-		this.x = (FIELD_W/2)<<8;
-		this.y = (FIELD_H/2)<<8;
+		this.x  = (FIELD_W/2)<<8;
+		this.y  = (FIELD_H-50)<<8;
+		this.mhp= 100;
+		this.hp = this.mhp;
+
 		this.speed  = 512;
 		this.reload = 0;
 		this.relo2  = 0;
 		this.r      = 17;
 		this.damage = 0;
+		this.muteki = 0;
+		this.count  = 0;
+
 	}
 
 	//戦闘機の移動
 	update()
 	{
+		this.count++;
 		if (this.damage)this.damage--;
+		if (this.muteki)this.muteki--;
 
 		if( key[16] && this.reload==0 )
 		{
@@ -91,6 +108,7 @@ class Jiki
 	//描画
 	draw()
 	{
+		if(this.muteki && (this.count&1)) return;
 		drawSprite(0, this.x, this.y);
 	}
 }
