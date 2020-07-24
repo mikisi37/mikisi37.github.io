@@ -5,6 +5,7 @@ let drawCount=0;
 let fps=0;
 let lastTime=Date.now();
 
+
 //スムージング
 const SMOOTHING = false;
 
@@ -64,6 +65,12 @@ let star=[];
 
 //キーボードの状態
 let key=[];
+
+//スコアチェック
+let scores = 149;
+
+//スキルアップ
+let sukiru = 1;
 
 //オブジェクトなど
 let teki=[];
@@ -160,13 +167,27 @@ function gameLoop()
 		con.fillText("FPS:"+fps,10,20);
 		con.fillText("X:"+(jiki.x>>8),100,20);
 		con.fillText("Y:"+(jiki.y>>8),193,20);
-		con.fillText("Score:"+score,500,20);
+		con.fillText("HP:"+jiki.hp,380,20);
+		con.fillText("SkillLV:"+sukiru,470,20)
 
-		con.fillText("HP:"+jiki.hp,10,40);
-		con.fillText("Bullet:"+tama.length,100,40);
-		con.fillText("Enemy:"+teki.length,193,40);
-		con.fillText("Enemy Bullet:"+teta.length,295,40);
+		con.fillText("Bullet:"+tama.length,10,40);
+		con.fillText("Enemy:"+teki.length,100,40);
+		con.fillText("Enemy Bullet:"+teta.length,195,40);
+		con.fillText("Score:"+score,380,40);
 	}
+
+	//スコアでHP回復＆スキルアップ
+
+	if(score > scores)
+	{
+		scores += 150;
+		jiki.hp += 20;
+		if(sukiru<5)
+		{
+			sukiru += 1;
+		}
+	}
+
 }
 
 //オンロードでゲーム開始

@@ -109,6 +109,8 @@ document.onkeydown = function(e)
 		jiki = new Jiki();
 		gameOver=false;
 		score =0;
+		scores =149;
+		sukiru =1;
 	}
 }
 

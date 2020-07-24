@@ -79,16 +79,10 @@ class Jiki
 		if (this.damage)this.damage--;
 		if (this.muteki)this.muteki--;
 
-		if( key[16] && this.reload==0 )
+		//スキル1
+		if( key[16] && this.reload==0 && sukiru ==1)
 		{
 			tama.push( new Tama(this.x,this.y-(4<<8), 0,-2000 ) );
-			/*
-			tama.push( new Tama(this.x+(8<<8),this.y-(4<<8), 80,-2000 ) );
-			tama.push( new Tama(this.x-(8<<8),this.y-(4<<8), -80,-2000 ) );
-			tama.push( new Tama(this.x+(16<<8),this.y-(4<<8), 80,-2000 ) );
-			tama.push( new Tama(this.x-(16<<8),this.y-(4<<8), -80,-2000 ) );
-			*/
-
 			this.reload=6;
 			if(++this.relo2 ==4)
 			{
@@ -96,6 +90,69 @@ class Jiki
 				this.relo2=0;
 			}
 		}
+		//スキル2
+		if( key[16] && this.reload==0 && sukiru ==2)
+		{
+			tama.push( new Tama(this.x+(6<<8),this.y-(4<<8), 40,-2000 ) );
+			tama.push( new Tama(this.x-(6<<8),this.y-(4<<8), -40,-2000 ) );
+			this.reload=6;
+			if(++this.relo2 ==4)
+			{
+				this.reload=20;
+				this.relo2=0;
+			}
+		}
+		//スキル3
+			if( key[16] && this.reload==0 && sukiru ==3)
+			{
+				tama.push( new Tama(this.x,this.y-(4<<8), 0,-2000 ) );
+				tama.push( new Tama(this.x+(8<<8),this.y-(4<<8), 40,-2000 ) );
+				tama.push( new Tama(this.x-(8<<8),this.y-(4<<8), -40,-2000 ) );
+				this.reload=6;
+				if(++this.relo2 ==4)
+				{
+					this.reload=20;
+					this.relo2=0;
+				}
+			}
+			//スキル4
+			if( key[16] && this.reload==0 && sukiru ==4)
+			{
+				tama.push( new Tama(this.x+(5<<8),this.y-(4<<8), 40,-2000 ) );
+				tama.push( new Tama(this.x-(5<<8),this.y-(4<<8), -40,-2000 ) );
+				tama.push( new Tama(this.x+(13<<8),this.y-(4<<8), 40,-2000 ) );
+				tama.push( new Tama(this.x-(13<<8),this.y-(4<<8), -40,-2000 ) );
+				this.reload=6;
+				if(++this.relo2 ==4)
+				{
+					this.reload=20;
+					this.relo2=0;
+				}
+			}
+			//スキル5
+			if( key[16] && this.reload==0 && sukiru >=5)
+			{
+				tama.push( new Tama(this.x,this.y-(4<<8), 0,-2000 ) );
+				tama.push( new Tama(this.x+(6<<8),this.y-(4<<8), 40,-2000 ) );
+				tama.push( new Tama(this.x-(6<<8),this.y-(4<<8), -40,-2000 ) );
+				tama.push( new Tama(this.x+(14<<8),this.y-(4<<8), 40,-2000 ) );
+				tama.push( new Tama(this.x-(14<<8),this.y-(4<<8), -40,-2000 ) );
+				this.reload=6;
+				if(++this.relo2 ==4)
+				{
+					this.reload=20;
+					this.relo2=0;
+				}
+			}
+
+			/*
+			tama.push( new Tama(this.x+(8<<8),this.y-(4<<8), 80,-2000 ) );
+			tama.push( new Tama(this.x-(8<<8),this.y-(4<<8), -80,-2000 ) );
+			tama.push( new Tama(this.x+(16<<8),this.y-(4<<8), 80,-2000 ) );
+			tama.push( new Tama(this.x-(16<<8),this.y-(4<<8), -80,-2000 ) );
+			*/
+
+
 		if( !key[16] )this.reload= this.relo2=0;
 
 		if(this.reload>0 ) this.reload--;
