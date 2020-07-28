@@ -111,6 +111,7 @@ document.onkeydown = function(e)
 		score =0;
 		scores =149;
 		sukiru =1;
+		time =0;
 	}
 }
 

@@ -72,6 +72,9 @@ let scores = 149;
 //スキルアップ
 let sukiru = 1;
 
+//タイム計測
+let time = 0;
+
 //オブジェクトなど
 let teki=[];
 let teta=[];
@@ -167,6 +170,7 @@ function gameLoop()
 		con.fillText("FPS:"+fps,10,20);
 		con.fillText("X:"+(jiki.x>>8),100,20);
 		con.fillText("Y:"+(jiki.y>>8),193,20);
+		con.fillText("Time:"+(Math.round(time)),265,20)
 		con.fillText("HP:"+jiki.hp,380,20);
 		con.fillText("SkillLV:"+sukiru,470,20)
 
@@ -186,6 +190,12 @@ function gameLoop()
 		{
 			sukiru += 1;
 		}
+	}
+
+	//タイムカウント
+	if(!gameOver)
+	{
+		time += 0.017;
 	}
 
 }
