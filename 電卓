@@ -1,0 +1,208 @@
+import tkinter as tk
+
+
+# ウィンドウを作成 --- (*1)
+win = tk.Tk()
+win.attributes('-alpha', 0.96)
+win.geometry("500x545")
+win.title('電卓')
+
+
+# テキストボックス
+into = tk.Entry(win,bg='#000000',fg='#FFFFFF',font=("",40))
+into.place(x=5,
+           y=0,
+           width=490,
+           height=50,)
+
+
+#ボタンを押したとき
+def one_click():
+    into.insert(tk.END,"1")
+def two_click():
+    into.insert(tk.END,"2")
+def three_click():
+    into.insert(tk.END,"3")
+def four_click():
+    into.insert(tk.END,"4")
+def five_click():
+    into.insert(tk.END,"5")
+def six_click():
+    into.insert(tk.END,"6")
+def seven_click():
+    into.insert(tk.END,"7")
+def eight_click():
+    into.insert(tk.END,"8")
+def nine_click():
+    into.insert(tk.END,"9")
+def zero_click():
+    into.insert(tk.END,"0")
+def clear_click():
+    pos_end_prev = len(into.get())-1
+    into.delete(pos_end_prev,tk.END)
+def allclear_click():
+    into.delete(0,tk.END,)
+def equal_click():
+    an=into.get()
+    ans=an.translate(str.maketrans({"×":"*","÷":"/"}))
+    ans_mod=eval(ans)
+    into.delete(0,tk.END,)
+    into.insert(tk.END,ans_mod)
+
+def addition_click():
+    into.insert(tk.END,"+")
+def subtraction_click():
+    into.insert(tk.END,"-")
+def multiplicative_click():
+    into.insert(tk.END,"×")
+def division_click():
+    into.insert(tk.END,"÷")
+def period_click():
+    into.insert(tk.END,".")
+def combination_click():
+    into.insert(tk.END,"C")
+def permutation_click():
+    into.insert(tk.END,"P")
+def squared_click():
+    into.insert(tk.END,"^")
+def root_click():
+    into.insert(tk.END,"√")
+def sin_click():
+    into.insert(tk.END,"sin")
+def cos_click():
+    into.insert(tk.END,"cos")
+def tan_click():
+    into.insert(tk.END,"tan")
+
+
+#ボタンを作成
+oneButton = tk.Button(win,font=("",40), text='1', command=one_click)
+oneButton.place(x=5,
+           y=344,
+           width=98,
+           height=98,)
+twoButton = tk.Button(win,font=("",40), text='2', command=two_click)
+twoButton.place(x=103,
+           y=344,
+           width=98,
+           height=98,)
+threeButton = tk.Button(win,font=("",40), text='3', command=three_click)
+threeButton.place(x=201,
+           y=344,
+           width=98,
+           height=98,)
+fourButton = tk.Button(win,font=("",40), text='4', command=four_click)
+fourButton.place(x=5,
+           y=246,
+           width=98,
+           height=98,)
+fiveButton = tk.Button(win,font=("",40), text='5', command=five_click)
+fiveButton.place(x=103,
+           y=246,
+           width=98,
+           height=98,)
+sixButton = tk.Button(win,font=("",40), text='6', command=six_click)
+sixButton.place(x=201,
+           y=246,
+           width=98,
+           height=98,)
+sevenButton = tk.Button(win,font=("",40), text='7', command=seven_click)
+sevenButton.place(x=5,
+           y=148,
+           width=98,
+           height=98,)
+eightButton = tk.Button(win,font=("",40), text='8', command=eight_click)
+eightButton.place(x=103,
+           y=148,
+           width=98,
+           height=98,)
+nineButton = tk.Button(win,font=("",40), text='9', command=nine_click)
+nineButton.place(x=201,
+           y=148,
+           width=98,
+           height=98,)
+zeroButton = tk.Button(win,font=("",40), text='0', command=zero_click)
+zeroButton.place(x=5,
+           y=442,
+           width=98,
+           height=98,)
+additionButton = tk.Button(win,bg='#808080',font=("",40), text='+', command=addition_click)
+additionButton.place(x=299,
+           y=442,
+           width=98,
+           height=98,)
+subtractionButton = tk.Button(win,bg='#808080',font=("",40), text='-', command=subtraction_click)
+subtractionButton.place(x=299,
+           y=344,
+           width=98,
+           height=98,)
+multiplicativeButton = tk.Button(win,bg='#808080',font=("",40), text='×', command=multiplicative_click)
+multiplicativeButton.place(x=299,
+           y=246,
+           width=98,
+           height=98,)
+divisionButton = tk.Button(win,bg='#808080',font=("",40), text='÷', command=division_click)
+divisionButton.place(x=299,
+           y=148,
+           width=98,
+           height=98,)
+periodButton = tk.Button(win,font=("",40), text='.', command=period_click)
+periodButton.place(x=103,
+           y=442,
+           width=98,
+           height=98,)
+combinationButton = tk.Button(win,bg='#808080',font=("",40), text='nCr', command=combination_click)
+combinationButton.place(x=397,
+           y=246,
+           width=98,
+           height=98,)
+permutationButton = tk.Button(win,bg='#808080',font=("",40), text='nPr', command=permutation_click)
+permutationButton.place(x=397,
+           y=148,
+           width=98,
+           height=98,)
+squaredButton = tk.Button(win,bg='#808080',font=("",40), text='^', command=squared_click)
+squaredButton.place(x=397,
+           y=50,
+           width=98,
+           height=98,)
+rootButton = tk.Button(win,bg='#808080',font=("",40), text='√', command=root_click)
+rootButton.place(x=299,
+           y=50,
+           width=98,
+           height=98,)
+sinButton = tk.Button(win,bg='#808080',font=("",40), text='sin', command=sin_click)
+sinButton.place(x=5,
+           y=50,
+           width=98,
+           height=98,)
+cosButton = tk.Button(win,bg='#808080',font=("",40), text='cos', command=cos_click)
+cosButton.place(x=103,
+           y=50,
+           width=98,
+           height=98,)
+tanButton = tk.Button(win,bg='#808080',font=("",40), text='tan', command=tan_click)
+tanButton.place(x=201,
+           y=50,
+           width=98,
+           height=98,)
+clearButton = tk.Button(win,bg='#808080',font=("",40), text='C', command=clear_click)
+clearButton.place(x=397,
+           y=344,
+           width=98,
+           height=98,)
+allclearButton = tk.Button(win,bg='#808080',font=("",40), text='AC', command=allclear_click)
+allclearButton.place(x=397,
+           y=442,
+           width=98,
+           height=98,)
+equalButton = tk.Button(win,font=("",40), text='=', command=equal_click)
+equalButton.place(x=201,
+           y=442,
+           width=98,
+           height=98,)
+
+
+
+#ウィンドウを動かす
+win.mainloop()
