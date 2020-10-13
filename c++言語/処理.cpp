@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <windows.h>
+#include <time.h>
 
 main ()
 {
@@ -12,6 +13,8 @@ main ()
   Sleep(50);
   printf("Do you want to start processing? [y/n]");
  }
+
+ srand((unsigned)time(NULL));
 
   while(which == '1' or which == '2' or which == '3' or which == '4')
   {
