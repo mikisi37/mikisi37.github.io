@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "encryption.h"
 
-main()
+encrypt()
 {
   int k = 16;
   char p[256];
@@ -36,4 +36,9 @@ main()
   }
   printf("%s\n",p);
   printf("%s\n",pt);
+  encrypt();
+}
+main()
+{
+  encrypt();
 }
