@@ -1,1 +1,5 @@
 g++ -o name fname
+
+パス
+環境変数
+MinGW/bin
