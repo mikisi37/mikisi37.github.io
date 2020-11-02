@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <string.h>
+#include <cstdlib>
 
-int main()
+main()
 {
   char a[] = "C:\\MinGW\\bin\\g++.exe -o ";
   char s[] = " ";
@@ -19,7 +20,6 @@ int main()
     strcat(a,e);
     FILE *pipe = popen(a, "r");
     pclose(pipe);
-    main();
   }
   else if(f == 'n')
   {
@@ -35,9 +35,11 @@ int main()
     strcat(a,e);
     FILE *pipe = popen(a, "r");
     pclose(pipe);
-    main();
   }
   else if(f == 'f')
   {
+    exit(0);
   }
+  printf("\n");
+  main();
 }
