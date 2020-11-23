@@ -1,0 +1,31 @@
+<code><math><![CDATA[
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>一日で百万円稼ぐ方法</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  </head>
+  <body>
+    <section class="hero is-fullheight" style="background: url(img.jpg) center">
+      <div class="hero-body">
+        <div id="app" class="container">
+          <div v-if="seen" class="notification">
+            <progress class="progress is-small is-primary" max="100">0%</progress>
+            <p class="is-size-4">{{ message }}</p>
+          </div>
+
+          <h1 class="title is-size-1 has-text-white">
+            儲ける方法
+          </h1>
+          <p class="is-size-3 has-text-primary">何もせずに一日で百万円稼ぐ方法があります。</p>
+          <p class="is-size-3 has-text-primary">そのような夢の方法を教え南無。これであなたも億万長者の仲間入り！</p>
+          <button v-on:click="move" href="invoice.html" class="button is-link is-large">もっと詳しく</button>
+        </div>
+      </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script type="text/javascript" src="main.js"></script>
+  </body>
+</html>
