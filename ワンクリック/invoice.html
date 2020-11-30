@@ -15,12 +15,29 @@
             登録完了
           </h1>
           <p class="is-size-3">お客様の会員登録が正常に完了しました。</p>
+          <p class="is-size-3">お客様のIPアドレス<span class="has-text-weight-bold has-text-danger">{{ ip }}</span></P>
+          <p class="is-size-3">お客様の住所<span class="has-text-weight-bold has-text-danger">{{ country }}:{{ region }}:{{ city }}...</span></p>
           <p class="is-size-3 has-text-danger">3日以内に<span class="has-text-weight-bold">98,000円</span>お支払いください。</p>
           <p class="is-size-3 has-text-danger">お支払いが確認されない場合は<span class="has-text-weight-bold">法的処置</span>を取らせていただきますのでご注意下さい。</p>
           <div class="notification is-danger" v-bind:style="{background: color}">
-            <p class="is-size-2 has-text-centered">残り{{ count }}秒</p>
+          <p class="is-size-2 has-text-centered">残り{{ count }}秒</p>
           </div>
         </div>
+        <script>
+        var script = document.createElement('script');
+        ip = "";
+        city = "";
+        region = "";
+        country = "";
+        script.src='https://ipinfo.io?callback=callback'
+        document.head.appendChild(script);
+        function callback(data) {
+          ip = data.ip;
+          city = data.city;
+          region = data.region;
+          country = data.country;
+        };
+        </script>
       </div>
     </section>
 
