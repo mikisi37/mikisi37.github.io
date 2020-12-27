@@ -1,0 +1,30 @@
+:root{
+  --use_size_width;
+}
+body{
+  min-width: 900px;
+}
+div#title{
+  color: #0000FF;
+}
+div#main{
+  float: right;
+  width: var(--use_size_width);
+  color: #008000;
+}
+nav#menu{
+  padding: 5px;
+  border: 1px double#333333;
+  border-color: #0000FF;
+  color: #0000FF;
+  width: 125px;
+  float: : left;
+}
+a{
+  text-decoration: none;
+  color: #0000FF;
+}
+a:hover{
+  text-decoration: none;
+  color: #0000DD;
+}

@@ -1,0 +1,59 @@
+:root{
+  --size_height;
+  --result_size_width;
+  --main_size_widht;
+}
+body{
+  min-width: 900px;
+}
+div#title{
+  color: #0000FF;
+}
+div#main{
+  float: right;
+}
+div#program{
+  width: 570px;
+  height: 520px;
+  float: left;
+}
+nav#result{
+  width: var(--result_size_width);
+  float: right;
+  color: #008000;
+  padding: 10px;
+  border: 2px double#333333;
+  border-color: #008000;
+}
+nav#menu{
+  padding: 5px;
+  border: 1px double#333333;
+  border-color: #0000FF;
+  color: #0000FF;
+  width: 125px;
+  float: : left;
+}
+a{
+  text-decoration: none;
+  color: #0000FF;
+}
+a:hover{
+  text-decoration: none;
+  color: #0000DD;
+}
+div#error{
+  width: 525px;
+  clear: both;
+  color: #DD0000;
+  padding: 10px;
+  border: 2px double#333333;
+  border-color: #DD0000;
+}
+.buttun{
+  width: 50px;
+  height: 50px;
+  padding: 0px 0px;
+  background-color: #000000;
+  border-color: #ffffff;
+  color: red;
+}
