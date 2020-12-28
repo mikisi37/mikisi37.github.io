@@ -1,7 +1,17 @@
 let xy;
-let savedate = "adf"
+let savedate = ['none','none','none','none','none','none','none','none','none','none',
+                'none','none','none','none','none','none','none','none','none','none',
+                'none','none','none','none','none','none','none','none','none','none',
+                'none','none','none','none','none','none','none','none','none','none',
+                'none','none','none','none','none','none','none','none','none','none',
+                'none','none','none','none','none','none','none','none','none','none',
+                'none','none','none','none','none','none','none','none','none','none',
+                'none','none','none','none','none','none','none','none','none','none',
+                'none','none','none','none','none','none','none','none','none','none',
+                'none','none','none','none','none','none','none','none','none','none'];
 
 function order(what){
+  savedate.splice(xy,1,what);
   if(what == 'up'){
     document.getElementById(xy).style.transform ="rotate("+270+"deg)";
     what = '➝';
