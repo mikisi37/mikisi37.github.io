@@ -6,6 +6,7 @@ body{
 }
 div#title{
   color: #0000FF;
+  font-size: 35px;
 }
 div#main{
   float: right;

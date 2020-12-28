@@ -52,6 +52,7 @@ div#error{
   border-color: #DD0000;
 }
 div#order{
+  z-index: 10;
   position: absolute;
   background-color: #000;
   color: #fff;
