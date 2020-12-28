@@ -118,6 +118,7 @@ div#order{
   background-color: #000000;
   border-color: #ffffff;
   color: #DD0000;
+  -webkit-appearance: none;
 }
 div#save{
   left: var(--save_left);
