@@ -28,6 +28,9 @@ function order(what){
     document.getElementById(xy).style.transform ="rotate("+180+"deg)";
     what = '➝';
   }
+  else if(what == 'none'){
+    what = ' ';
+  }
   else{
     document.getElementById(xy).style.transform ="rotate("+0+"deg)";
   }
