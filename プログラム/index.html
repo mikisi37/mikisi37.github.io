@@ -11,6 +11,14 @@
       <a href="index.html">Mikisiプログラミング<a>
     </div>
     <br>
+    <div id="save">
+      <br>
+      保存する名前を入力してください。<br><br>
+      <input type="text" class="save_name" id='save_name'><br><br>
+      <input type="button" class="save_button" value="　保 存　" onclick="save('yes')">
+      &emsp;&emsp;&emsp;&emsp;
+      <input type="button" class="save_button" value="キャンセル" onclick="save('no')"><br><br>
+    </div>
     <div id="order">
       <input type="button" value="出力" class="buttun" onclick="order('output')">
       <input type="button" value="テキスト" class="buttun" onclick="order('text')"><br>
@@ -144,7 +152,7 @@
       <a href="index.html">・ホーム</a><br>
       <a href="use/first.html">・初めに</a><br>
       <a href="use/basic.html">・基本操作方法</a><br>
-      <a href="#" onclick="save()">・Save</a><br>
+      <a href="#" onclick="save('order')">・Save</a><br>
       <a href="#" onclick="read()">・Read</a>
     </nav>
     <br>
