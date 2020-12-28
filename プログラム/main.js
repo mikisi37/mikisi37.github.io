@@ -40,6 +40,8 @@ function order(what){
 
 function main(where){
   document.documentElement.style.setProperty("--order","block");
+  document.documentElement.style.setProperty("--read","none");
+  document.documentElement.style.setProperty("--save","none");
   xy = where;
 }
 
@@ -64,24 +66,46 @@ function save(what){
   }
   else{
     document.documentElement.style.setProperty("--save","block");
+    document.documentElement.style.setProperty("--order","none");
+    document.documentElement.style.setProperty("--read","none");
   }
 }
-function read(){
-
+function read(what){
+  if(what == 'yes'){
+    let file = document.querySelector('#file').files[0];
+    let files = new FileReader();
+    files.readAsText(file);
+    files.onload = function(){
+      savedate = files.result;
+      document.documentElement.style.setProperty("--read","none");
+      document.getElementById("read_text").innerText = file.name;
+      document.getElementById("save_name").value = file.name.replace('.txt','');
+    }
+  }
+  else if(what == 'no'){
+    document.documentElement.style.setProperty("--read","none");
+  }
+  else if(what == 'order'){
+    document.documentElement.style.setProperty("--read","block");
+    document.documentElement.style.setProperty("--save","none");
+    document.documentElement.style.setProperty("--order","none");
+  }
 }
 
 window_siz();
 window.onresize = window_siz;
 function window_siz(){
   if(window.innerWidth > 920){
-    document.documentElement.style.setProperty("--order_left",window.innerWidth/2-132+"px");
-    document.documentElement.style.setProperty("--save_left",window.innerWidth/2-180+"px");
+    document.documentElement.style.setProperty("--order_left",window.innerWidth/2-195+"px");
+    document.documentElement.style.setProperty("--save_left",window.innerWidth/2-200+"px");
+    document.documentElement.style.setProperty("--read_left",window.innerWidth/2-240+"px");
     document.documentElement.style.setProperty("--result_size_width",window.innerWidth-790+"px");
     document.documentElement.style.setProperty("--use_size_width",window.innerWidth-190+"px");
   }
   else{
     document.documentElement.style.setProperty("--order_left","265px");
     document.documentElement.style.setProperty("--save_left","260px");
+    document.documentElement.style.setProperty("--read_left","220px");
     document.documentElement.style.setProperty("--result_size_width","150px");
     document.documentElement.style.setProperty("--use_size_width","745px");
   }
