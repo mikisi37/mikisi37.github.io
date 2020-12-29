@@ -14,18 +14,22 @@ function order(what){
   savedate.splice(xy,1,what);
   if(what == 'up'){
     document.getElementById(xy).style.transform ="rotate("+270+"deg)";
+    document.getElementById(xy).style.fontSize ="20px";
     what = '➝';
   }
   else if(what == 'down'){
     document.getElementById(xy).style.transform ="rotate("+90+"deg)";
+    document.getElementById(xy).style.fontSize ="20px";
     what = '➝';
   }
   else if(what == 'right'){
     document.getElementById(xy).style.transform ="rotate("+0+"deg)";
+    document.getElementById(xy).style.fontSize ="20px";
     what = '➝';
   }
   else if(what == 'left'){
     document.getElementById(xy).style.transform ="rotate("+180+"deg)";
+    document.getElementById(xy).style.fontSize ="20px";
     what = '➝';
   }
   else if(what == 'none'){
@@ -33,6 +37,7 @@ function order(what){
   }
   else{
     document.getElementById(xy).style.transform ="rotate("+0+"deg)";
+    document.getElementById(xy).style.fontSize ="15px";
   }
   document.documentElement.style.setProperty("--order","none");
   document.getElementById(xy).value = what;
