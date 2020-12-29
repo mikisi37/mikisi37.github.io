@@ -76,7 +76,10 @@ function read(what){
     let files = new FileReader();
     files.readAsText(file);
     files.onload = function(){
-      savedate = files.result;
+      for(let i = 0;i < 100;i++){
+        xy = i;
+        order(files.result.split(',')[i]);
+      }
       document.documentElement.style.setProperty("--read","none");
       document.getElementById("read_text").innerText = file.name;
       document.getElementById("save_name").value = file.name.replace('.txt','');
