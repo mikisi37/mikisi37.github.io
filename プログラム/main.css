@@ -38,6 +38,7 @@ nav#menu{
   border-color: #0000FF;
   color: #0000FF;
   width: 125px;
+  overflow: hidden;
   float: : left;
 }
 div#menu_text{
@@ -61,7 +62,7 @@ div#error{
 }
 div#order{
   left: var(--order_left);
-  width: 390px;
+  width: 615px;
   z-index: 5;
   overflow: visible scroll;
   position: absolute;
@@ -168,4 +169,7 @@ div#read{
 }
 .file{
   color: #fff;
+}
+div#file_error{
+  color: #DD0000;
 }

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Mikisiプログラミング</title>
     <link rel="stylesheet" href="main.css">
+    <script type="text/javascript" src="definition.js"></script>
     <script type="text/javascript" src="main.js"></script>
     <script type="text/javascript" src="program.js"></script>
   </head>
@@ -23,7 +24,8 @@
     <div id="read">
       <br>
       読み込みたいファイルを選択してください。<br><br>
-      <input type="file" class="file" id="file"><br><br>
+      <input type="file" class="file" id="file" value=""><br>
+      <div id="file_error"></div><br>
       <input type="button" class="saveANDread_button" value="　反 映　" onclick="read('yes')">
       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
       <input type="button" class="saveANDread_button" value="キャンセル" onclick="read('no')"><br><br>
@@ -35,6 +37,14 @@
       <input type="button" value="➝" class="down" onclick="order('down')">
       <input type="button" value="➝" class="right" onclick="order('right')">
       <input type="button" value="➝" class="left" onclick="order('left')">
+      <input type="button" value="↱" class="right" onclick="order('up_right')">
+      <input type="button" value="↰" class="right" onclick="order('up_left')">
+      <input type="button" value="↰" class="left" onclick="order('down_right')">
+      <input type="button" value="↱" class="left" onclick="order('down_left')">
+      <input type="button" value="↰" class="down" onclick="order('right_up')">
+      <input type="button" value="↱" class="down" onclick="order('right_down')">
+      <input type="button" value="↱" class="up" onclick="order('left_up')">
+      <input type="button" value="↰" class="up" onclick="order('left_down')">
       <input type="button" value=" " class="up" onclick="order('none')">
     </div>
     <div id="main">
@@ -151,9 +161,11 @@
       </div>
       <nav id="result">
         Result:<br>
+        <div id="result_message"></div>
       </nav>
       <div id="error">
         Error:<br>
+        <div id="error_message"></div>
       </div>
     </div>
     <nav id="menu">
