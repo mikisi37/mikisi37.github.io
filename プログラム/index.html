@@ -31,6 +31,9 @@
       <input type="button" class="saveANDread_button" value="キャンセル" onclick="read('no')"><br><br>
     </div>
     <div id="order">
+      <input type="button" value="✕" class="exit_button" onclick="exit_button()">
+      <input type="text" class="text_name" id="text_name">
+      <input type="button" value="決定" class="text_button" onclick="text_box()"><br>
       <input type="button" value="出力" class="buttun" onclick="order('output')">
       <input type="button" value="テキスト" class="buttun" onclick="order('text')"><br>
       <input type="button" value="➝" class="up" onclick="order('up')">

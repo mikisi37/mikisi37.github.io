@@ -16,6 +16,17 @@ let savedate = ['none','none','none','none','none','none','none','none','none','
                 'none','none','none','none','none','none','none','none','none','none',
                 'none','none','none','none','none','none','none','none','none','none'];
 
+let textdate = ['','','','','','','','','','',
+                '','','','','','','','','','',
+                '','','','','','','','','','',
+                '','','','','','','','','','',
+                '','','','','','','','','','',
+                '','','','','','','','','','',
+                '','','','','','','','','','',
+                '','','','','','','','','','',
+                '','','','','','','','','','',
+                '','','','','','','','','',''];
+
 let up_order = ['up','right_up','left_up'];
 let down_order = ['down','right_down','left_down'];
 let right_order = ['right','up_right','down_right'];

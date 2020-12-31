@@ -6,6 +6,7 @@ let where_motion;
 let where_arrow;
 
 function program(){
+  document.getElementById(xy).style.borderColor ="#fff";
   document.getElementById("error_message").innerText = "";
   document.getElementById("result_message").innerText = "";
   motion_existence = false;
@@ -71,6 +72,7 @@ function order_arrow(where){
     result = order_arrow(where + xy);
   }
   else{
+    result = '';
     document.getElementById("error_message").innerText = "矢印が無効なものをもとにしています。";
   }
   return result;
@@ -79,7 +81,7 @@ function order_arrow(where){
 function order_target(where){
   let result;
   if(savedate[where] == 'text'){
-    result = 'a';
+    result = textdate[where];
   }
   return result;
 }
