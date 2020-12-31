@@ -1,15 +1,19 @@
 let motion_existence;
 let target_existence;
 let arrow_existence;
-let where_arrow = [];
+let where_order;
+let where_motion;
+let where_arrow;
 
 function program(){
   document.getElementById("error_message").innerText = "";
-  where_arrow = [];
+  document.getElementById("result_message").innerText = "";
   motion_existence = false;
   target_existence = false;
   arrow_existence = false;
-  let where_order = [];
+  where_order = [];
+  where_motion = [];
+  where_arrow = [];
   for(let i = 0;i < 100;i++){
     if(savedate[i] != 'none'){
       where_order.push(i);
@@ -18,6 +22,7 @@ function program(){
   for(let i = 0;i < where_order.length;i++){
     if(motion.includes(savedate[Number(where_order[i])])){
       motion_existence = true;
+      where_motion.push(where_order[i]);
     }
     if(target.includes(savedate[Number(where_order[i])])){
       target_existence = true;
@@ -28,7 +33,7 @@ function program(){
     }
   }
   if(motion_existence && target_existence && arrow_existence){
-    order_arrow(where_arrow[0]);
+    order_motion(where_motion[0]);
   }
   else if(motion_existence && target_existence && !arrow_existence){
     document.getElementById("error_message").innerText = "命令を矢印でつないで下さい。";
@@ -42,105 +47,69 @@ function program(){
 }
 
 function order_arrow(where){
-  let error_flag = '';
-  if(savedate[Number(where)] == 'up'){
-    if(Math.floor(Number(where) / 10) != 0&&Math.floor(Number(where) / 10) != 9){
-      
-    }
-    else{
-      error_flag = 'arrow';
-    }
+  let xy = 0;
+  let result;
+  if(down_target.includes(savedate[where])){
+    xy += 10;
   }
-  else if(savedate[Number(where)] == 'up_right'){
-    if(Number(where) % 10 != 9&&Math.floor(Number(where) / 10) != 9) {
+  else if(up_target.includes(savedate[where])){
+    xy -= 10;
+  }
+  else if(left_target.includes(savedate[where])){
+    xy -= 1;
+  }
+  else if(right_target.includes(savedate[where])){
+    xy += 1;
+  }
+  if(motion.includes(savedate[where + xy])){
+    document.getElementById("error_message").innerText = "矢印が無効なものをもとにしています。";
+  }
+  else if(target.includes(savedate[where + xy])){
+    result = order_target(where + xy);
+  }
+  else if(arrow.includes(savedate[where + xy])){
+    result = order_arrow(where + xy);
+  }
+  else{
+    document.getElementById("error_message").innerText = "矢印が無効なものをもとにしています。";
+  }
+  return result;
+}
 
-    }
-    else{
-      error_flag = 'arrow';
-    }
+function order_target(where){
+  let result;
+  if(savedate[where] == 'text'){
+    result = 'a';
   }
-  else if(savedate[Number(where)] == 'up_left'){
-    if(Number(where) % 10 != 0&&Math.floor(Number(where) / 10) != 9) {
+  return result;
+}
 
-    }
-    else{
-      error_flag = 'arrow';
-    }
+function order_motion(where){
+  let motion_xy = 0;
+  let xy = 0;
+  if(up_order.includes(savedate[where + 10])){
+    motion_xy++;
+    xy = where + 10;
   }
-  else if(savedate[Number(where)] == 'down'){
-    if(Math.floor(Number(where) / 10) != 0&&Math.floor(Number(where) / 10) != 9) {
-
-    }
-    else{
-      error_flag = 'arrow';
-    }
+  if(down_order.includes(savedate[where - 10])){
+    motion_xy++;
+    xy = where - 10;
   }
-  else if(savedate[Number(where)] == 'down_right'){
-    if(Math.floor(Number(where) / 10) != 0&&Number(where) % 10 != 9) {
-
-    }
-    else{
-      error_flag = 'arrow';
-    }
+  if(right_order.includes(savedate[where - 1])){
+    motion_xy++;
+    xy = where - 1;
   }
-  else if(savedate[Number(where)] == 'down_left'){
-    if(Math.floor(Number(where) / 10) != 0&&Number(where) % 10 != 0) {
-
-    }
-    else{
-      error_flag = 'arrow';
-    }
+  if(left_order.includes(savedate[where + 1])){
+    motion_xy++;
+    xy = where + 1;
   }
-  else if(savedate[Number(where)] == 'right'){
-    if(Number(where) % 10 != 0&&Number(where) % 10 != 9) {
-
-    }
-    else{
-      error_flag = 'arrow';
-    }
+  if(motion_xy == 1){
+    document.getElementById("result_message").innerText = order_arrow(xy);
   }
-  else if(savedate[Number(where)] == 'right_up'){
-    if(Number(where) % 10 != 0&&Math.floor(Number(where) / 10) != 0) {
-
-    }
-    else{
-      error_flag = 'arrow';
-    }
+  else if(motion_xy == 0){
+    document.getElementById("error_message").innerText = "命令を矢印でつないで下さい。";
   }
-  else if(savedate[Number(where)] == 'right_down'){
-    if(Number(where) % 10 != 0&&Math.floor(Number(where) / 10) != 9) {
-
-    }
-    else{
-      error_flag = 'arrow';
-    }
+  else{
+    document.getElementById("error_message").innerText = "１つの出力に対して１つしか出力できません。";
   }
-  else if(savedate[Number(where)] == 'left'){
-    if(Number(where) % 10 != 0&&Number(where) % 10 != 9) {
-
-    }
-    else{
-      error_flag = 'arrow';
-    }
-  }
-  else if(savedate[Number(where)] == 'left_up'){
-    if(Math.floor(Number(where) / 10) != 0&&Number(where) % 10 != 9) {
-
-    }
-    else{
-      error_flag = 'arrow';
-    }
-  }
-  else if(savedate[Number(where)] == 'left_down'){
-    if(Math.floor(Number(where) / 10) != 9&&Number(where) % 10 != 9) {
-
-    }
-    else{
-      error_flag = 'arrow';
-    }
-  }
-  if(error_flag == 'arrow'){
-    document.getElementById("error_message").innerText = "矢印が無効な方向を向いています。";
-  }
-  console.log(where);
 }

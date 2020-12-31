@@ -21,6 +21,7 @@ function order(what){
     document.getElementById(xy).style.fontSize ="20px";
   }
   else if(what == 'none'){
+    document.getElementById(xy).style.fontSize ="15px";
     what = ' ';
   }
   else{
