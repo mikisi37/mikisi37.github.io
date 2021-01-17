@@ -8,8 +8,8 @@ var start;
 
 var paddle_width = 100;
 var paddle_height = 10;
-var paddle_x = (canvas.width - paddle_width)/2;
-var paddle_y = canvas.height - paddle_height - 35;
+var paddle_x = (canvas.width -paddle_width) /2;
+var paddle_y = canvas.height -paddle_height -35;
 function paddle(){
   ctx.beginPath();
   ctx.rect(paddle_x,paddle_y,paddle_width,paddle_height);
@@ -18,24 +18,95 @@ function paddle(){
   ctx.closePath();
 }
 
-var vx = 1;
+var vx = -1;
 var vy = -1;
 var ball_size = 12;
-var ball_x = canvas.width/2;
+var ball_x = canvas.width /2;
 var ball_y = paddle_y - ball_size;
+var v = 1 / Math.cos(45);
 function ball(){
   ctx.beginPath();
-  ctx.arc(ball_x,ball_y,ball_size,0,Math.PI*2);
+  ctx.arc(ball_x,ball_y,ball_size,0,Math.PI *2);
   ctx.fillStyle = "#00DDDD";
   ctx.fill();
   ctx.closePath();
   ball_x += vx;
   ball_y += vy;
+  for(var i = 0;i < block_column *block_line;i++){
+    if(block_exist[i]){
+      if(ball_x >= (i %block_column +1) *(block_width +block_padin) -block_width && ball_x <= (i %block_column +1) *(block_width +block_padin) -block_width +6 && ball_y <= (Math.floor(i  /block_column) +1) *(block_height +10) && ball_y >= (Math.floor(i  /block_column) +1) *(block_height +10)){
+        vx = -vx;
+        block_exist[i] = false;
+      }
+      else if(ball_x <= (i %block_column +1) *(block_width +block_padin) && ball_x >= (i %block_column +1) *(block_width +block_padin) -block_width -6 && ball_y <= (Math.floor(i  /block_column) +1) *(block_height +10) && ball_y >= (Math.floor(i  /block_column) +1) *(block_height +10)){
+        vx = -vx;
+        block_exist[i] = false;
+      }
+      else if(ball_y <= (Math.floor(i  /block_column) +1) *(block_height +10) && ball_y >= (Math.floor(i  /block_column) +1) *(block_height +10) -6 && ball_x >= (i %block_column +1) *(block_width +block_padin) -block_width && ball_x <= (i %block_column +1) *(block_width +block_padin)){
+        vy = -vy;
+        block_exist[i] = false;
+      }
+      else if(ball_y >= (Math.floor(i  /block_column) +1) *(block_height +10) -block_height && ball_y <= (Math.floor(i  /block_column) +1) *(block_height +10) +6 && ball_x >= (i %block_column +1) *(block_width +block_padin) -block_width && ball_x <= (i %block_column +1) *(block_width +block_padin)){
+        vy = -vy;
+        block_exist[i] = false;
+      }
+    }
+  }
   if(ball_x > canvas.width - ball_size || ball_x < ball_size)vx=-vx;
   if(ball_y < ball_size)vy=-vy;
-  else if(ball_y == paddle_y - 5 && ball_x < paddle_x + paddle_width && ball_x > paddle_x)vy=-vy;
+  else if(ball_y == paddle_y -5 && ball_x <= paddle_x + paddle_width && ball_x >= paddle_x){
+    if(ball_x <= paddle_x + paddle_width /5){
+      vx = Math.cos(60)*v;
+      vy = Math.sin(60)*v;
+    }
+    else if(ball_x <= paddle_x + paddle_width /15 *7 && ball_x > paddle_x + paddle_width /5){
+      vx = -Math.cos(30)*v;
+      vy = Math.sin(30)*v;
+    }
+    else if(ball_x < paddle_x + paddle_width /15 *8 && ball_x > paddle_x + paddle_width /15 *7){
+      vx = 0;
+      vy = -v;
+    }
+    else if(ball_x < paddle_x + paddle_width /15 *12 && ball_x >= paddle_x + paddle_width /15 *8){
+      vx = Math.cos(30)*v;
+      vy = Math.sin(30)*v;
+    }
+    else{
+      vx = -Math.cos(60)*v;
+      vy = Math.sin(60)*v;
+    }
+  }
   else if(ball_y > canvas.height - ball_size){
     alert("GAME OVER");
+    document.location.reload();
+    start = false;
+    clearInterval(interval);
+  }
+}
+
+var block_width = paddle_width;
+var block_height = paddle_width /2;
+var block_column = Math.floor((canvas.width -10) /(block_width +10));
+var block_line = Math.floor((canvas.height /2) /(block_height +10));
+var block_padin = (canvas.width -(block_width *block_column)) /(block_column +1);
+var block_exist = [];
+for(var i = 0;i < block_column *block_line;i++){
+  block_exist[i] = true;
+}
+function block(){
+  var block_count = 0;
+  for(var i =0;i < block_column *block_line;i++){
+    if(block_exist[i]){
+      ctx.beginPath();
+      ctx.rect((i %block_column +1) *(block_width +block_padin),(Math.floor(i  /block_column) +1) *(block_height +10),-block_width,-block_height);
+      ctx.fillStyle = "#00DDDD";
+      ctx.fill();
+      ctx.closePath();
+    }
+    else block_count++;
+  }
+  if(block_count == block_column *block_line){
+    alert("CLEAR THE GAME");
     document.location.reload();
     start = false;
     clearInterval(interval);
@@ -67,10 +138,10 @@ function keyup(e){
 }
 function keymove(){
   if(key_right && paddle_x < canvas.width-paddle_width){
-    paddle_x += 3;
+    paddle_x += 2;
   }
   else if(key_left && paddle_x > 0){
-    paddle_x -= 3;
+    paddle_x -= 2;
   }
 }
 
@@ -78,6 +149,7 @@ function main(){
   if(start){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ball();
+    block();
     keymove();
     paddle();
   }
@@ -86,7 +158,7 @@ function main(){
 
 ctx.font="40px' Impact'";
 ctx.fillStyle = "#00DDDD";
-ctx.fillText("Please puss Enter",canvas.width/3.5,canvas.height/2);
+ctx.fillText("Please push Enter",canvas.width /3.5,canvas.height /2);
 
 var interval = setInterval(main,5);
 ball();
