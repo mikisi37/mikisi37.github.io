@@ -6,24 +6,31 @@ canvas.style.backgroundColor = "#000";
 
 var start;
 
-var paddle_width = 100;
+var paddle_width = canvas.width /8;
 var paddle_height = 10;
-var paddle_x = (canvas.width -paddle_width) /2;
+var paddle_x = (canvas.width -paddle_width -10) /2;
 var paddle_y = canvas.height -paddle_height -35;
+var paddle_wid;
 function paddle(){
+  var count = 0;
+  for(var i = 0;i < block_column *block_line;i++){
+    if(block_exist[i])count++;
+  }
+  paddle_wid = paddle_width /(block_column *block_line) *count +10;
   ctx.beginPath();
-  ctx.rect(paddle_x,paddle_y,paddle_width,paddle_height);
+  ctx.rect(paddle_x,paddle_y,paddle_wid,paddle_height);
   ctx.fillStyle = "#00DDDD";
   ctx.fill();
   ctx.closePath();
 }
 
-var vx = -1;
-var vy = -1;
 var ball_size = 12;
 var ball_x = canvas.width /2;
 var ball_y = paddle_y - ball_size;
 var v = 1 / Math.cos(45);
+var random = Math.floor(Math.random() *(151 -30) +30);
+var vx = Math.cos(random) *v;
+var vy = Math.sin(random) *v;
 function ball(){
   ctx.beginPath();
   ctx.arc(ball_x,ball_y,ball_size,0,Math.PI *2);
@@ -54,7 +61,7 @@ function ball(){
   }
   if(ball_x > canvas.width - ball_size || ball_x < ball_size)vx=-vx;
   if(ball_y < ball_size)vy=-vy;
-  else if(ball_y == paddle_y -5 && ball_x <= paddle_x + paddle_width && ball_x >= paddle_x){
+  else if(ball_y >= paddle_y -5 && ball_y <= paddle_y && ball_x <= paddle_x + paddle_width && ball_x >= paddle_x){
     if(ball_x <= paddle_x + paddle_width /5){
       vx = Math.cos(60)*v;
       vy = Math.sin(60)*v;
@@ -137,7 +144,7 @@ function keyup(e){
   }
 }
 function keymove(){
-  if(key_right && paddle_x < canvas.width-paddle_width){
+  if(key_right && paddle_x < canvas.width -paddle_wid){
     paddle_x += 2;
   }
   else if(key_left && paddle_x > 0){
