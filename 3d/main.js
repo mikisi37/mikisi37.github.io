@@ -85,34 +85,31 @@ function draw(){
   Draw.circle(px,py,10,'red');
 }
 
-function mouse(){
-  document.body.addEventListener("mousemove",function(e){
-    px = e.offsetX;
-    py = e.offsetY;
-  });
-}
+document.body.addEventListener("mousemove",function(e){
+  px = e.offsetX;
+  py = e.offsetY;
+});
 
-document.addEventListener("keydown",keydown,false);
-document.addEventListener("keyup",keyup,false);
 let key_right;
 let key_left;
 
-function keydown(e){
+document.addEventListener("keydown",function(e){
   if(e.key == "Right" || e.key == "ArrowRight"){
     key_right = true;
   }
   else if(e.key == "Left" || e.key == "ArrowLeft"){
     key_left = true;
   }
-}
-function keyup(e){
+});
+document.addEventListener("keyup",function(e){
   if(e.key == "Right" || e.key == "ArrowRight"){
     key_right = false;
   }
   else if(e.key == "Left" || e.key == "ArrowLeft"){
     key_left = false;
   }
-}
+});
+
 function keymove(){
   if(key_right){
     p0 -= 3;
@@ -124,7 +121,6 @@ function keymove(){
 
 function main(){
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  mouse();
   keymove();
   draw();
 }
