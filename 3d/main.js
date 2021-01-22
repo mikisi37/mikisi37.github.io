@@ -4,6 +4,11 @@ canvas.width = 800;
 canvas.height = 800;
 canvas.style.backgroundColor = "#000";
 
+let wall = [
+  [100,20,500,600],
+  [100,20,100,400],
+]
+
 class Draw{
   static line(sx,sy,x,y,color){
     ctx.beginPath();
@@ -13,6 +18,11 @@ class Draw{
     ctx.strokeStyle = color;
     ctx.stroke();
   }
+  static line2(y,c,color){
+    let x = 700 -2 *c;
+    Draw.line(x,200 +y /2,x,200);
+    Draw.line(x,200,x,200 -y /2);
+  }
   static circle(x,y,r,color){
     ctx.beginPath();
     ctx.arc(x,y,r,0, 2*Math.PI, false);
@@ -20,68 +30,60 @@ class Draw{
     ctx.fillStyle = color;
     ctx.fill();
   }
-  static wall(what,v,color){
-    for(let i = 0;i < what.length;i++){
-      for(let ii = 0;ii < what[i].length;ii++){
-        let x = (ii +1) *v -v;
-        let y = (i +1) *v -v;
-        if(what[i][ii] == 1){
-          Draw.line(x,y,x,y +v,color);
-        }
-        else if(what[i][ii] == 2){
-          Draw.line(x +v,y,x +v,y +v,color);
-        }
-        else if(what[i][ii] == 3){
-          Draw.line(x,y,x +v,y,color);
-        }
-        else if(what[i][ii] == 4){
-          Draw.line(x,y +v,x +v,y +v,color);
-        }
-        else if(what[i][ii] == 5){
-          Draw.line(x,y,x,y +v,color);
-          Draw.line(x,y,x +v,y,color);
-        }
-        else if(what[i][ii] == 6){
-          Draw.line(x +v,y,x +v,y +v,color);
-          Draw.line(x,y,x +v,y,color);
-        }
-        else if(what[i][ii] == 7){
-          Draw.line(x,y,x,y +v,color);
-          Draw.line(x,y +v,x +v,y +v,color);
-        }
-        else if(what[i][ii] == 8){
-          Draw.line(x +v,y,x +v,y +v,color);
-          Draw.line(x,y +v,x +v,y +v,color);
-        }
-      }
-    }
+  static wall(sx,sy,x,y,c){
+     let a = Math.floor(sy -y) /Math.floor(sx -x);
+     let b = y -a *x;
+     for(walls of wall){
+       let inf = 0;
+       let wa = Math.floor(walls[1] -walls[3]) /Math.floor(walls[0] -walls[2]);
+       let wb = walls[1] -wa *walls[0];
+       let xX = (wb -b) /(a -wa);
+       let yX = (a *wb -b *wa) /(a -wa);
+       if(a == "Infinity"||a == "-Infinity"){xX = x; yX = x *wa +wb;}
+       if(wa == "Infinity"||wa == "-Infinity"){xX = walls[0]; yX = walls[0] *a +b;}
+       if(xX >= Sab.min(sx,x) && xX <= Sab.max(sx,x)
+       && yX >= Sab.min(sy,y) && yX <= Sab.max(sy,y)){
+         if(xX >= Sab.min(walls[0],walls[2]) && xX <= Sab.max(walls[0],walls[2])
+         && yX >= Sab.min(walls[1],walls[3]) && yX <= Sab.max(walls[1],walls[3])){
+           Draw.circle(xX,yX,4,'red');
+           Draw.line2(5000 /Sab.magin(px,py,xX,yX),c,'white')
+         }
+       }
+     }
   }
   static eye(x,y,s0,r,color){
-    Draw.line(x,y,x +Math.cos(s0 *(Math.PI /180)) *r,y -Math.sin(s0 *(Math.PI /180)) *r,color);
-    s0 += 50;
-    Draw.line(x,y,x +Math.cos(s0 *(Math.PI /180)) *r,y -Math.sin(s0 *(Math.PI /180)) *r,color);
-    s0 -= 100;
-    Draw.line(x,y,x +Math.cos(s0 *(Math.PI /180)) *r,y -Math.sin(s0 *(Math.PI /180)) *r,color);
+    let n0 = s0;
+    for(let i = 0;i < 100;i++){
+      Draw.line(x,y,x +Math.cos(n0 *(Math.PI /180)) *r,y -Math.sin(n0 *(Math.PI /180)) *r,color);
+      Draw.wall(x,y,x +Math.cos(n0 *(Math.PI /180)) *r,y -Math.sin(n0 *(Math.PI /180)) *r,i)
+      n0 = s0 +i;
+    }
+  }
+}
+
+class Sab{
+  static min(x,y){
+    if(x >= y) return y;
+    else return x;
+  }
+  static max(x,y){
+    if(x >= y) return x;
+    else return y;
+  }
+  static magin(sx,sy,x,y){
+  return Math.sqrt(Math.pow(Math.floor(sx -x),2) +Math.pow(Math.floor(sy -y),2));
   }
 }
 
 let px = 50;
 let py = 50;
-let p0 = 0;
-
-let stage = [//0は空白 1は左縦 2は右縦　3は上横 4は下横 5は左上角 6は右上角 7は左下角 8は右下角
-  [0,0,0,0,0,0,0],
-  [0,5,3,3,3,3,6],
-  [0,1,0,0,0,0,2],
-  [0,1,0,0,0,0,2],
-  [0,1,0,0,0,0,2],
-  [0,1,0,0,0,0,2],
-  [0,7,4,4,4,4,8],
-];
+let p0 = 10;
 
 function draw(){
-  Draw.wall(stage,50,'white');
-  Draw.eye(px,py,p0,100,'red');
+  for(walls of wall){
+    Draw.line(walls[0],walls[1],walls[2],walls[3],'white');
+  }
+  Draw.eye(px,py,p0,100,'blue');
   Draw.circle(px,py,10,'red');
 }
 
@@ -112,10 +114,10 @@ document.addEventListener("keyup",function(e){
 
 function keymove(){
   if(key_right){
-    p0 -= 3;
+    p0 -= 2;
   }
   if(key_left){
-    p0 += 3;
+    p0 += 2;
   }
 }
 
