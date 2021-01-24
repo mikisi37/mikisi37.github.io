@@ -79,15 +79,26 @@ class Draw{
 
 class Sab{
   static blok(){
-    let c = Sab.random(10,20) *4;
     blok = [];
-    for(let i = 0;i < c;i += 4){
+    let c = Sab.random(10,20) *4;
+    for(let i = 0;i < c;i+=4){
+      let n = 0;
       let x = Sab.random(100,460);
       let y = Sab.random(20,380);
-      blok[i] = [x,y,x +40,y];
-      blok[i+1] = [x,y,x,y +40];
-      blok[i+2] = [x,y +40,x +40,y +40];
-      blok[i+3] = [x +40,y,x +40,y +40];
+      for(let ii = 1;ii < blok.length;ii += 4){
+        for(let ix = x;ix < x +41;ix += 40){
+          for(let iy = y;iy < x +41;iy += 40){
+            if(ix >= blok[ii][0] && ix <= blok[ii][2]
+            && iy >= blok[ii][1] && iy <= blok[ii+1][3])n++;
+          }
+        }
+      }
+      if(n == 0){
+        blok[i] = [x,y,x +40,y];
+        blok[i+1] = [x,y,x,y +40];
+        blok[i+2] = [x,y +40,x +40,y +40];
+        blok[i+3] = [x +40,y,x +40,y +40];
+      }
     }
   }
   static min(x,y){
