@@ -119,7 +119,7 @@ let p0 = 10;
 function draw(){
   Draw.wall('white');
   Draw.blok('white')
-  Draw.eye(px,py,p0,00,'blue');
+  Draw.eye(px,py,p0,100,'blue');
   Draw.circle(px,py,10,'red');
 }
 
