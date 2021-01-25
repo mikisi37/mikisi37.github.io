@@ -10,7 +10,7 @@ let wall = [
   [100,420,500,420],
   [500,20,500,420]
 ]
-let blok;
+let blok=[];
 
 class Draw{
   static line(sx,sy,x,y,color){
@@ -80,18 +80,14 @@ class Draw{
 class Sab{
   static blok(){
     blok = [];
+    let n = 0;
+    let cb = (wall[0][2] -wall[0][0]) /40 -1;
     let c = Sab.random(10,20) *4;
     for(let i = 0;i < c;i+=4){
-      let n = 0;
-      let x = Sab.random(100,460);
-      let y = Sab.random(20,380);
-      for(let ii = 1;ii < blok.length;ii += 4){
-        for(let ix = x;ix < x +41;ix += 40){
-          for(let iy = y;iy < x +41;iy += 40){
-            if(ix >= blok[ii][0] && ix <= blok[ii][2]
-            && iy >= blok[ii][1] && iy <= blok[ii+1][3])n++;
-          }
-        }
+      let x = wall[0][0] +Sab.random(0,cb) *40;
+      let y = wall[0][1] +Sab.random(0,cb) *40;
+      for(let ii = 0;ii < blok.length -1;ii += 4){
+        if(x == blok[ii][0] && y == blok[ii][1])n++;
       }
       if(n == 0){
         blok[i] = [x,y,x +40,y];
@@ -119,7 +115,7 @@ class Sab{
     return Math.cos(Math.PI /180 *x);
   }
   static random(min,max){
-    return Math.random() *(max -min) +min;
+    return Math.floor(Math.random() *(max -min) +min);
   }
 }
 
@@ -160,12 +156,8 @@ document.addEventListener("keyup",function(e){
 });
 
 function keymove(){
-  if(key_right){
-    p0 -= 2;
-  }
-  if(key_left){
-    p0 += 2;
-  }
+  if(key_right)p0 -= 2;
+  if(key_left)p0 += 2;
 }
 
 function main(){
@@ -174,5 +166,8 @@ function main(){
   draw();
 }
 
-Sab.blok();
+while(blok.length < 10 *4){
+  Sab.blok();
+  console.log(blok.length);
+}
 setInterval(main,30);
