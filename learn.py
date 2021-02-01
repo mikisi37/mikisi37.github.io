@@ -1,12 +1,14 @@
 import time
+from random import randint
+
 def learn(x):
-    w1 = 1
-    w2 = -1
-    h = 0
+    w1 = randint(-10,10)
+    w2 = randint(-10,10)
+    h = randint(-10,10)
     up = 0.5
+    print('Start [w1,w2,h] == [{0},{1},{2}]'.format(w1,w2,h))
     while True:
         count = 0
-        ave_error = 0
         learn_count = 0
         for list in x:
             i = ''
@@ -18,12 +20,11 @@ def learn(x):
             h -= error *up
             if error == 0:
                 count += 1
-            ave_error += error
             learn_count += 1
             i += '＊' * learn_count *3 + '・' * (len(x) - learn_count) *3
             print('\r[{0}]'.format(i),end='')
-            time.sleep(0.5)
-        print('\nerror ======> ['+str(abs(ave_error // len(x)))+']')
+            time.sleep(0.2)
+        print('\nProbability ======> ['+str(abs(count / len(x) *100))+'%]')
         if count == len(x):
             return w1,w2,h
 
