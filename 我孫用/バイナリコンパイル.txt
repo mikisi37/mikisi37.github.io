@@ -1,0 +1,1 @@
+certutil -f -decodehex ～.txt ～.exe 12
