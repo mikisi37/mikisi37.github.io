@@ -1,0 +1,2 @@
+main: main.cs
+	C:\Windows\Microsoft.NET\Framework\v3.5\csc.exe $<
