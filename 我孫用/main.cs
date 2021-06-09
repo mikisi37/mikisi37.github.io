@@ -6,21 +6,26 @@ using System.Windows.Forms;
 
 //グローバル関数
 public class Global{
-  public static int SaveDate = 143532;
-  public static char MyT = '0';
+  public static string Account;
+  public static char MyT;
   public static bool GameS = false;
 }
 
 //メイン
 class Program{
   static void Main(){
+    if(!System.IO.File.Exists("Account.txt")){
+      Sub.MakeA();
+    }
+    Global.Account = File.Read("Account.txt");
     Application.Run(new Form1());
   }
 }
 
-//ウィンドウ
+//ゲームウィンドウ
 class Form1 : Form{
   public Form1(){
+    this.StartPosition = FormStartPosition.CenterScreen;
     this.MinimumSize = new Size(636,659);
     this.Icon = new System.Drawing.Icon("main.ico");
     this.Text = "リバーシ";
@@ -139,10 +144,10 @@ class File{
   }
 
   //書き込み
-  public static void Write(string File){
+  public static void Write(string File,string Date){
     Encoding sjisEnc = Encoding.GetEncoding("Shift_JIS");
     StreamWriter writer = new StreamWriter(File, false, sjisEnc);
-    writer.WriteLine(Global.SaveDate);
+    writer.WriteLine(Date);
     writer.Close();
   }
 }
