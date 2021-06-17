@@ -9,8 +9,21 @@ class Sub{
   }
 
   public static void StartU(){
+    Directory.CreateDirectory(Global.Server + Global.Account);
     File.Write(Global.Server + Global.Account + @"\Server.txt", Global.Initial);
     File.Write(Global.Server + Global.Account + @"\Data.txt", "1");
+  }
+
+  public static void Online(){
+    string[] Files = Directory.GetDirectories(Global.Server,"*");
+
+    Global.OnlineP.Clear();
+
+    foreach(string i in Files){
+      if(File.Read(i + @"\Data.txt")[0] == '1'){
+        Global.OnlineP.Add(i.Replace(Global.Server, ""));
+      }
+    }
   }
 }
 

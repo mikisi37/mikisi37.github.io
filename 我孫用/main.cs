@@ -9,20 +9,23 @@ using System.Collections.Generic;
 public class Global{
   public static string Initial = "00000000000000000000000000012000000210000000000000000000000000001";
   public static string Server = @"C:\Users\Mikisi\Documents\Program\c++\C#\";
-  public static string SaveP = "test.txt";
   public static string ServerF;
   public static string Account;
+  public static string ServerP;
   public static string List;
   public static char NowT;
   public static char MyT = '1';
   public static char YoT = '2';
   public static bool GameS = false;
   public static List<int> ListT = new List<int>();
+  public static List<int> ListF = new List<int>(){0,0,0};
+  public static List<string> OnlineP = new List<string>();
 }
 
 //メイン
 class Program{
   static void Main(){
+    Sub.Online();
     if(!System.IO.File.Exists("Account.txt")){
       Sub.MakeA();
     }
@@ -35,6 +38,10 @@ class Program{
 
 //ゲームウィンドウ
 class Form1 : Form{
+  Label label = new Label();
+  Button button = new Button();
+  ListView listbox = new ListView();
+
   public Form1(){
     this.StartPosition = FormStartPosition.CenterScreen;
     this.MinimumSize = new Size(636,659);
@@ -44,23 +51,63 @@ class Form1 : Form{
     this.BackColor = Color.FromArgb(0x19,0x19,0x70);
     this.MouseClick += new MouseEventHandler(MClick);
 
+    int Size = this.ClientSize.Width /9;
+    button.Text = "Play";
+    button.Font = new Font(label.Font.FontFamily, Size);
+    button.Location = new Point(200, 250);
+    button.BackColor = Color.FromArgb(0xff,0xff,0xff);
+    button.Anchor = AnchorStyles.None;
+    button.Click += new EventHandler(button_Click);
+    button.AutoSize = true;
+    this.Controls.Add(button);
+
+    listbox.Width = 500;
+    listbox.Height = 500;
+    listbox.Location = new Point(68, 10);
+    listbox.Font = new Font(label.Font.FontFamily, Size /2);
+    listbox.Anchor = (AnchorStyles.Top | AnchorStyles.Left);
+    listbox.MouseClick += new MouseEventHandler(list_Click);
+    this.Controls.Add(listbox);
+    listbox.Visible = false;
+
     Timer timer = new Timer();
     timer.Interval = 33;
     timer.Tick += new EventHandler(Update);
     timer.Start();
   }
 
+  private void button_Click(object sender,EventArgs e){
+    listbox.Items.Clear();
+    foreach(string i in Global.OnlineP){
+      listbox.Items.Add(i);
+    }
+
+    button.Visible = false;
+    listbox.Visible = true;
+  }
+
+  private void list_Click(object sender, MouseEventArgs e){
+    Console.WriteLine(listbox.SelectedItems[0]);
+  }
+
+
   //ループ
   void Update(object sender, EventArgs e){
+    if(!Global.GameS){
+      Sub.Online();
+
+    }
+
     Invalidate();
   }
 
   //マウスクリック
   void MClick(object sende,MouseEventArgs e){
-    Console.WriteLine("{0},{1}",e.X,e.Y);
-    Global.GameS = true;
-    Global.List = File.Read(Global.SaveP);
-    //Play.Put(29);
+    int Place = (e.X - Global.ListF[1]) / Global.ListF[0] + (e.Y - Global.ListF[2]) / Global.ListF[0] * 8;
+
+    if(Global.GameS && Global.ListT.Contains(Place)){
+      Play.Put(Place);
+    }
   }
 
   //描画処理
@@ -89,14 +136,19 @@ class Form1 : Form{
       GapW = (WinW -WinH) /2;
     }
     else{FieldS = WinW /8;}
+    Global.ListF[0] = FieldS;
+    Global.ListF[1] = GapW + 10;
+    Global.ListF[2] = GapH + 10;
 
     //ゲーム中描画
     if(Global.GameS){
+      listbox.Visible = false;
+
       int Count = 0;
       int CountT = 0;
       int CountB = 0;
       int CountW = 0;
-      Global.List = File.Read(Global.SaveP);
+      Global.List = File.Read(Global.ServerP).TrimEnd('\r', '\n');
       Global.NowT = Global.List[64];
       Global.ListT.Clear();
       RoundG = FieldS * 10 /75;
@@ -145,13 +197,14 @@ class Form1 : Form{
           ListN.Add(Copy.ToString());
         }
         ListN[64] = Global.YoT.ToString();
-        File.Write(Global.SaveP, String.Join("",ListN.ToArray()));
+        File.Write(Global.ServerP, String.Join("",ListN.ToArray()));
       }
 
       //勝敗
       Count = CountB + CountW;
       if(CountB == 0 || CountW == 0 || Count == 64){
         Global.GameS = false;
+        button.Visible = false;
       }
 
       //情報表示
@@ -228,7 +281,7 @@ class Play{
     }
 
     ListN[64] = Global.YoT.ToString();
-    File.Write(Global.SaveP, String.Join("",ListN.ToArray()));
+    File.Write(Global.ServerP, String.Join("",ListN.ToArray()));
   }
 }
 
