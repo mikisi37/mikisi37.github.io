@@ -225,10 +225,32 @@ class Form1 : Form{
 
 class Play{
   static List<int> Cons = new List<int>(){-9,-8,-7,-1,1,7,8,9};
+  static List<int> Cons1 = new List<int>(){-8,-7,1,8,9};
+  static List<int> Cons2 = new List<int>(){-9,-8,-1,7,8};
+  static List<int> Cons3 = new List<int>(){-1,1,7,8,9};
+  static List<int> Cons4 = new List<int>(){-9,-8,-7,-1,1};
+
 
   //置ける場所特定
   public static void PutT(int Place){
-    foreach(int i in Cons){
+    var ConsX = Cons;
+    var ConsY = Cons;
+    if(Place % 8 == 0){
+      ConsX = Cons1;
+    }
+    else if(Place % 8 == 7){
+      ConsX = Cons2;
+    }
+    if(Place / 8 == 0){
+      ConsY = Cons3;
+    }
+    else if(Place / 8 == 7){
+      ConsY = Cons4;
+    }
+    var ConsM = ConsX.FindAll(ConsY.Contains);
+
+
+    foreach(int i in ConsM){
       int Place1 = Place;
       int Place2 = Place + i;
 
@@ -241,7 +263,6 @@ class Play{
             Global.ListT.Add(Place2);
             break;
           }
-
           Place1 -= i;
         }
       }
@@ -250,13 +271,29 @@ class Play{
 
   //駒をひっくり返す処理
   public static void Put(int Place){
+    var ConsX = Cons;
+    var ConsY = Cons;
+    if(Place % 8 == 0){
+      ConsX = Cons1;
+    }
+    else if(Place % 8 == 7){
+      ConsX = Cons2;
+    }
+    if(Place / 8 == 0){
+      ConsY = Cons3;
+    }
+    else if(Place / 8 == 7){
+      ConsY = Cons4;
+    }
+    var ConsM = ConsX.FindAll(ConsY.Contains);
+
     List<string> ListN = new List<string>(){};
     foreach(char Copy in Global.List){
       ListN.Add(Copy.ToString());
     }
     ListN[Place] = Global.MyT.ToString();
 
-    foreach(int i in Cons){
+    foreach(int i in ConsM){
       int Place1 = Place + i;
       var PutO = new List<int>(){};
 
