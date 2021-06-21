@@ -327,7 +327,8 @@ class File{
 
   //読み込み
   public static string Read(string File){
-    StreamReader sr = new StreamReader(File, Encoding.GetEncoding("Shift_JIS"));
+    FileStream fs = new FileStream(File, FileMode.Open, FileAccess.ReadWrite);
+    StreamReader sr = new StreamReader(fs);
     string text = sr.ReadToEnd();
     sr.Close();
     return text;
