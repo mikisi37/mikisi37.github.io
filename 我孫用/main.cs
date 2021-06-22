@@ -105,7 +105,7 @@ class Form1 : Form{
   void MClick(object sende,MouseEventArgs e){
     int Place = (e.X - Global.ListF[1]) / Global.ListF[0] + (e.Y - Global.ListF[2]) / Global.ListF[0] * 8;
 
-    if(Global.GameS && Global.ListT.Contains(Place)){
+    if(Global.GameS && Global.NowT == Global.MyT && Global.ListT.Contains(Place)){
       Play.Put(Place);
     }
   }
@@ -191,7 +191,7 @@ class Form1 : Form{
       }
 
       //置ける場所がないとき
-      if(CountT == 0){
+      if(CountT == 0 && Global.NowT == Global.MyT){
         List<string> ListN = new List<string>(){};
         foreach(char Copy in Global.List){
           ListN.Add(Copy.ToString());
@@ -251,12 +251,16 @@ class Play{
 
 
     foreach(int i in ConsM){
+      int PlaceS = Place;
       int Place1 = Place;
       int Place2 = Place + i;
 
       if(Global.List[Place2] == '0'){
         while(true){
           if(Place1 < 0 && Place1 > 64 || Global.List[Place1] == '0'){
+            break;
+          }
+          else if(Place1 % 8 == 0 || Place1 % 8 == 7 && Place1 % 8 != PlaceS % 8){
             break;
           }
           else if(Global.List[Place1] == Global.MyT){
@@ -294,12 +298,16 @@ class Play{
     ListN[Place] = Global.MyT.ToString();
 
     foreach(int i in ConsM){
+      int PlaceS = Place;
       int Place1 = Place + i;
       var PutO = new List<int>(){};
 
       if(Global.List[Place1] == Global.YoT){
         while(true){
           if(Global.List[Place1] == '0'){
+            break;
+          }
+          else if(Place1 % 8 == 0 || Place1 % 8 == 7 && Place1 % 8 != PlaceS % 8){
             break;
           }
           else if(Global.List[Place1] == Global.MyT){
