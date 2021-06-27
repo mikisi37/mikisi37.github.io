@@ -16,6 +16,7 @@ class Form1 : Form{
     this.FormBorderStyle = FormBorderStyle.None;
     this.TransparencyKey = this.BackColor;
     this.ShowInTaskbar = false;
+    this.TopMost = true;
     this.Width = 640;
     this.Height = 500;
 
