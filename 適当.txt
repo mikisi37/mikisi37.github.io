@@ -1,0 +1,26 @@
+Sub a()
+    Dim v As Variant
+    Dim s As String
+    Dim i As Long
+    i = Range("A1").Value
+    s = Range("A2").Value
+    v = SplitStr(s, i)
+    For i = 0 To UBound(v) Step 1
+        Cells(3 + i, 1).Value = v(i)
+    Next
+End Sub
+
+
+Function SplitStr(ByVal Datas As String, ByVal Length As Long) As Variant
+    Dim v As Variant
+    Dim n As Long
+    Dim i As Long
+
+    n = 0
+    ReDim v(0 To Round(Len(Datas) / Length - 0.5, 0))
+    For i = 1 To Len(Datas) Step Length
+        v(n) = Mid(Datas, i, Length)
+        n = n + 1
+    Next
+    SplitStr = v
+End Function
